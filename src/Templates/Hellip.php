@@ -48,7 +48,13 @@ class Hellip extends Template implements interfaceTemplate
         $startLinePage = $this->currentPage - intval($this->numMiddlePages / 2);
         $startLinePage = $startLinePage > 0 ? $startLinePage : 1;
         $endLinePage = $startLinePage + $this->numMiddlePages - 1;
-        $endLinePage = $endLinePage > $this->numPages ? $this->numPages : $endLinePage;
+        if ( $endLinePage > $this->numPages) {
+            $endLinePage = $this->numPages;
+            if ($endLinePage - $startLinePage < $this->numMiddlePages) {
+                $startLinePage = $endLinePage - $this->numMiddlePages + 1;
+                $startLinePage = $startLinePage > 0 ? $startLinePage : 1;
+            }
+        }
         if ($this->currentPage > 1 && $startLinePage > 1) {
             $str = str_replace('#page#', 1, $this->templatePage);
             $url = $this->getUrl();
